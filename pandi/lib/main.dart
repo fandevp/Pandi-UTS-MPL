@@ -1,80 +1,108 @@
 import 'package:flutter/material.dart';
 
 class TeksUtama extends StatefulWidget {
-  final state = StateTeksUtama();
+  final GlobalKey<StateTeksUtama> key = GlobalKey<StateTeksUtama>();
 
-  TeksUtama({super.key});
+  TeksUtama() : super(key: GlobalKey<StateTeksUtama>());
 
   @override
-  State<StatefulWidget> createState() => state;
+  StateTeksUtama createState() => StateTeksUtama();
 }
 
 class StateTeksUtama extends State<TeksUtama> {
   var listNama = [
-    'PANDI ROESAL',
-    'RISKI NURSATRIA',
-    'SUNDARI',
-    'AL NIZAR VALGIN SAPUTRA',
-    'STEFANUS FANDI WIBOWO',
+    'Pandi',
+    'Dwiki',
+    'Rizka',
+    'Linda',
+    'Adit',
   ];
   var listWarna = [
-    Colors.blue,
-    Colors.red,
-    Colors.green,
-    Colors.orange,
-    Colors.yellow,
+    Color.fromARGB(255, 78, 220, 12),
+    Colors.purple,
+    Colors.teal,
+    Colors.lime,
+    Colors.indigo,
+    Colors.deepPurple,
   ];
   int index = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16.0),
-        Text(
-          'Apa kabar',
-          textDirection: TextDirection.ltr,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Text(
-          textAlign: TextAlign.center,
-          listNama[index % listNama.length],
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
-            color: listWarna[index % listWarna.length],
-          ),
-        )
-      ],
-    );
-  }
 
   void incrementIndex() {
     setState(() {
       index++;
     });
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+      margin: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.cyan[50],
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: 2,
+            offset: Offset(35.0, 30.0),
+            blurRadius: 5,
+          )
+        ],
+        border: Border.all(
+          color: Colors.blue,
+          width: 5,
+        ),
+      ),
+      child: Column(
+        children: [
+          Text(
+            'Apa kabar',
+            textDirection: TextDirection.ltr,
+          ),
+          Text(
+            listNama[index % listNama.length],
+            textDirection: TextDirection.ltr,
+            style: TextStyle(
+              fontSize: 45,
+              fontWeight: FontWeight.bold,
+              color: listWarna[index % listWarna.length],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 void main() {
   TeksUtama teksUtama = TeksUtama();
+
   runApp(MaterialApp(
-      title: 'Halo Dunia',
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.blue[800],
-          title: const Text(
-            'Halo Dunia',
-            style: TextStyle(color: Colors.white),
-          ),
+    title: 'Halo Dunia',
+    home: Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.blue[800],
+        title: const Text(
+          'Halo Dunia',
+          style: TextStyle(color: Colors.white),
         ),
-        body: Center(child: teksUtama),
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'Random',
-          onPressed: teksUtama.state.incrementIndex,
-          child: const Icon(Icons.refresh),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20), // Add some space from the top
+            teksUtama,
+          ],
         ),
-      )));
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Random',
+        onPressed: () => teksUtama.key.currentState?.incrementIndex(),
+        child: const Icon(Icons.refresh),
+      ),
+    ),
+  ));
 }
